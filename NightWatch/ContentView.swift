@@ -11,12 +11,12 @@ struct ContentView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Nightly Tasks")
-                    .font(.title3)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(.blue)
-                    .textCase(.uppercase)
-                    .underline()
+                HStack {
+                    //Image(systemName: "moon.stars")
+                    Text("\(Image(systemName: "moon.stars"))Nightly Tasks")
+                        .headerStyle()
+                        //.modifier(HeaderStyle())
+                }
                 
                 Text("Check all windows")
                 Text("Check all doors")
@@ -25,23 +25,15 @@ struct ContentView: View {
                 Text("Clear ice from sidewalks")
                 Text("Document \"strange and unusual\" occurrences")
                 
-                Text("Weekly Tasks")
-                    .font(.title3)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(.blue)
+                Text("\(Image(systemName: "sunset"))Weekly Tasks")
+                    .headerStyle()
                     .padding(.top)
-                    .textCase(.uppercase)
-                    .underline()
                 Text("Check inside all vacant rooms")
                 Text("Walk the perimeter of property")
                 
-                Text("Monthly Tasks")
-                    .font(.title3)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(.blue)
+                Text("\(Image(systemName: "calendar"))Monthly Tasks")
+                    .headerStyle()
                     .padding(.top)
-                    .textCase(.uppercase)
-                    .underline()
                 Text("Test security alarm")
                 Text("Test motion detectors")
                 Text("Test smoke alarms")
@@ -53,6 +45,23 @@ struct ContentView: View {
             Spacer()
         }
         .padding([.top, .leading], 10.0)
+    }
+}
+
+struct HeaderStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title3)
+            .fontWeight(.heavy)
+            .foregroundStyle(.yellow)
+            .textCase(.uppercase)
+            .underline()
+    }
+}
+
+extension View {
+    public func headerStyle() -> some View {
+        self.modifier(HeaderStyle())
     }
 }
 
