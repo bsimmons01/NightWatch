@@ -9,7 +9,18 @@ import SwiftUI
 
 struct FirstSwiftUINavigationStack: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            NavigationLink {
+                HStack {
+                    Circle()
+                    Text("Destination View")
+                }
+                .navigationTitle("Circle Title")
+            } label: {
+                Text("Got to Destination View")
+            }
+            .navigationTitle("Home Title")
+        }
     }
 }
 

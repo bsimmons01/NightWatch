@@ -32,41 +32,41 @@ struct ContentView: View {
 //        List(nightlyTasks, id: \.self) { taskName in
 //            Text(taskName)
 //        }
-        List {
-            Section(content: {
-                ForEach(nightlyTasks, id: \.self) { taskName in
-                    Text(taskName)
-                }
-            }, header: {
-                HStack {
-                    Text("\(Image(systemName: "moon.stars")) Nightly Tasks")
-                }
-                .headerStyle()
-            })
-            
-            Section(content: {
-                ForEach(weeklyTasks, id: \.self) { taskName in
-                    Text(taskName)
-                }
-            }, header: {
-                HStack {
-                    Text("\(Image(systemName: "sunset")) Weekly Tasks")
-                }
-                .headerStyle()
-            })
-            
-            Section(content: {
-                ForEach(monthlyTasks, id: \.self) { taskName in
-                    Text(taskName)
-                }
-            }, header: {
-                HStack {
-                    Text("\(Image(systemName: "calendar")) Monthly Tasks")
-                }
-                .headerStyle()
-            })
+        NavigationStack {
+            List {
+                Section(content: {
+                    ForEach(nightlyTasks, id: \.self) { taskName in
+                        NavigationLink(taskName) {
+                            DetailView(taskName: taskName)
+                        }
+                    }
+                }, header: {
+                    TaskSectionHeader(symbolSystemName: "moon.stars", headerText: "Nightly Tasks")
+                })
+                
+                Section(content: {
+                    ForEach(weeklyTasks, id: \.self) { taskName in
+                        NavigationLink(taskName) {
+                            DetailView(taskName: taskName)
+                        }
+                    }
+                }, header: {
+                    TaskSectionHeader(symbolSystemName: "sunset", headerText: "Weekly Tasks")
+                })
+                
+                Section(content: {
+                    ForEach(monthlyTasks, id: \.self) { taskName in
+                        NavigationLink(taskName) {
+                            DetailView(taskName: taskName)
+                        }
+                    }
+                }, header: {
+                    TaskSectionHeader(symbolSystemName: "calendar", headerText: "Monthly Tasks")
+                })
+            }
+            .listStyle(GroupedListStyle())
+            .navigationTitle(Text("Home"))
         }
-        .listStyle(GroupedListStyle())
         
         
 //        HStack {
@@ -124,19 +124,30 @@ extension View {
     }
 }
 
+struct TaskSectionHeader: View {
+    let symbolSystemName: String
+    let headerText: String
+    
+    var body: some View {
+        HStack {
+            Text("\(Image(systemName: symbolSystemName) ) \(headerText)")
+        }
+        .headerStyle()
+    }
+}
+
 #Preview {
     ContentView()
 }
 
 // A landscape one
-#Preview("ContentView Landscape", traits: .landscapeRight, body: {
-    ContentView()
-})
+//#Preview("ContentView Landscape", traits: .landscapeRight, body: {
+//    ContentView()
+//})
 
 // Old way of doing it
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
