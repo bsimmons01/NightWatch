@@ -7,44 +7,104 @@
 
 import SwiftUI
 
+let nightlyTasks = [
+    "Check all windows",
+    "Check all doors",
+    "Check that the safe is locked",
+    "Inspect security cameras",
+    "Clear ice from sidewalks",
+    "Document \"strange and unusual\" occurrences"
+]
+
+let monthlyTasks = [
+    "Test security alarm",
+    "Test motion detectors",
+    "Test smoke alarms"
+]
+
+let weeklyTasks = [
+    "Check inside all vacant rooms",
+    "Walk the perimeter of property"
+]
+
 struct ContentView: View {
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    //Image(systemName: "moon.stars")
-                    Text("\(Image(systemName: "moon.stars"))Nightly Tasks")
-                        .headerStyle()
-                        //.modifier(HeaderStyle())
+//        List(nightlyTasks, id: \.self) { taskName in
+//            Text(taskName)
+//        }
+        List {
+            Section(content: {
+                ForEach(nightlyTasks, id: \.self) { taskName in
+                    Text(taskName)
                 }
-                
-                Text("Check all windows")
-                Text("Check all doors")
-                Text("Check that the safe is locked")
-                Text("Inspect security cameras")
-                Text("Clear ice from sidewalks")
-                Text("Document \"strange and unusual\" occurrences")
-                
-                Text("\(Image(systemName: "sunset"))Weekly Tasks")
-                    .headerStyle()
-                    .padding(.top)
-                Text("Check inside all vacant rooms")
-                Text("Walk the perimeter of property")
-                
-                Text("\(Image(systemName: "calendar"))Monthly Tasks")
-                    .headerStyle()
-                    .padding(.top)
-                Text("Test security alarm")
-                Text("Test motion detectors")
-                Text("Test smoke alarms")
-                
-                Spacer()
-            }
-            .foregroundStyle(.gray)
+            }, header: {
+                HStack {
+                    Text("\(Image(systemName: "moon.stars")) Nightly Tasks")
+                }
+                .headerStyle()
+            })
             
-            Spacer()
+            Section(content: {
+                ForEach(weeklyTasks, id: \.self) { taskName in
+                    Text(taskName)
+                }
+            }, header: {
+                HStack {
+                    Text("\(Image(systemName: "sunset")) Weekly Tasks")
+                }
+                .headerStyle()
+            })
+            
+            Section(content: {
+                ForEach(monthlyTasks, id: \.self) { taskName in
+                    Text(taskName)
+                }
+            }, header: {
+                HStack {
+                    Text("\(Image(systemName: "calendar")) Monthly Tasks")
+                }
+                .headerStyle()
+            })
         }
-        .padding([.top, .leading], 10.0)
+        .listStyle(GroupedListStyle())
+        
+        
+//        HStack {
+//            VStack(alignment: .leading) {
+//                HStack {
+//                    //Image(systemName: "moon.stars")
+//                    Text("\(Image(systemName: "moon.stars"))Nightly Tasks")
+//                        .headerStyle()
+//                        //.modifier(HeaderStyle())
+//                }
+//                
+//                Text("Check all windows")
+//                Text("Check all doors")
+//                Text("Check that the safe is locked")
+//                Text("Inspect security cameras")
+//                Text("Clear ice from sidewalks")
+//                Text("Document \"strange and unusual\" occurrences")
+//                
+//                Text("\(Image(systemName: "sunset"))Weekly Tasks")
+//                    .headerStyle()
+//                    .padding(.top)
+//                Text("Check inside all vacant rooms")
+//                Text("Walk the perimeter of property")
+//                
+//                Text("\(Image(systemName: "calendar"))Monthly Tasks")
+//                    .headerStyle()
+//                    .padding(.top)
+//                Text("Test security alarm")
+//                Text("Test motion detectors")
+//                Text("Test smoke alarms")
+//                
+//                Spacer()
+//            }
+//            .foregroundStyle(.gray)
+//            
+//            Spacer()
+//        }
+//        .padding([.top, .leading], 10.0)
     }
 }
 
@@ -55,7 +115,6 @@ struct HeaderStyle: ViewModifier {
             .fontWeight(.heavy)
             .foregroundStyle(.yellow)
             .textCase(.uppercase)
-            .underline()
     }
 }
 
