@@ -29,15 +29,16 @@ struct MarkCompleteExperiment: View {
                 Image(systemName: theTask.isComplete ? "checkmark.square" : "square")
                 Text(theTask.name)
             }
-            ControlPanel(theTask: self.theTask)
+            ControlPanel()
         }
     }
 }
 
 struct ControlPanel: View {
-    @Bindable var theTask: NightWatchTaskExperiment
+    @Environment(NightWatchTaskExperiment.self) var theTask
     
     var body: some View {
+        @Bindable var theTask: NightWatchTaskExperiment = self.theTask
         HStack {
 //            if theTask.isComplete {
 //                Button("Reset") {
@@ -57,4 +58,5 @@ struct ControlPanel: View {
 
 #Preview {
     MarkCompleteExperiment()
+        .environment(NightWatchTaskExperiment(name: "Some Task", isComplete: false))
 }
