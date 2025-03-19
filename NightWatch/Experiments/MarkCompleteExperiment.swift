@@ -14,7 +14,7 @@ struct NightWatchTaskExperiment {
 }
 
 struct MarkCompleteExperiment: View {
-    @State var theTask = NightWatchTaskExperiment(name: "Check All Windows", isComplete: false)
+    @State private var theTask = NightWatchTaskExperiment(name: "Check All Windows", isComplete: false)
     
     var body: some View {
         VStack {
@@ -22,21 +22,24 @@ struct MarkCompleteExperiment: View {
                 Image(systemName: theTask.isComplete ? "checkmark.square" : "square")
                 Text(theTask.name)
             }
-            ControlPanel(theTask: self.theTask)
+            ControlPanel(theTask: self.$theTask)
         }
     }
 }
 
 struct ControlPanel: View {
-    @State var theTask: NightWatchTaskExperiment
+    @Binding var theTask: NightWatchTaskExperiment
     
     var body: some View {
         HStack {
-            Button("Mark Complete") {
-                theTask.isComplete = true
-            }
-            Button("Reset") {
-                theTask.isComplete = false
+            if theTask.isComplete {
+                Button("Reset") {
+                    theTask.isComplete = false
+                }
+            } else {
+                Button("Mark Complete") {
+                    theTask.isComplete = true
+                }
             }
         }
     }
