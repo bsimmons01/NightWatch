@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-struct NightWatchTaskExperiment {
+@Observable
+class NightWatchTaskExperiment {
+    internal init(name: String, isComplete: Bool, lastCompleted: Date? = nil) {
+        self.name = name
+        self.isComplete = isComplete
+        self.lastCompleted = lastCompleted
+    }
+    
     let name: String
     var isComplete: Bool
     var lastCompleted: Date?
@@ -22,24 +29,27 @@ struct MarkCompleteExperiment: View {
                 Image(systemName: theTask.isComplete ? "checkmark.square" : "square")
                 Text(theTask.name)
             }
-            ControlPanel(theTask: self.$theTask)
+            ControlPanel(theTask: self.theTask)
         }
     }
 }
 
 struct ControlPanel: View {
-    @Binding var theTask: NightWatchTaskExperiment
+    @Bindable var theTask: NightWatchTaskExperiment
     
     var body: some View {
         HStack {
-            if theTask.isComplete {
-                Button("Reset") {
-                    theTask.isComplete = false
-                }
-            } else {
-                Button("Mark Complete") {
-                    theTask.isComplete = true
-                }
+//            if theTask.isComplete {
+//                Button("Reset") {
+//                    theTask.isComplete = false
+//                }
+//            } else {
+//                Button("Mark Complete") {
+//                    theTask.isComplete = true
+//                }
+//            }
+            Toggle(isOn: $theTask.isComplete) {
+                Text("Task Complete")
             }
         }
     }
