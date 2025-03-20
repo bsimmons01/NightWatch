@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @Bindable var nightWatchViewModel = NightWatchViewModel()
     @State private var focusModeOn = false
+    @State private var resetAlertShowing = false
     
     var body: some View {
 //        List(nightlyTasks, id: \.self) { taskName in
@@ -99,54 +100,31 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        let refreshedNightWatchViewModel = NightWatchViewModel()
-                        self.nightWatchViewModel.nightlyTasks = refreshedNightWatchViewModel.nightlyTasks
-                        self.nightWatchViewModel.weeklyTasks = refreshedNightWatchViewModel.weeklyTasks
-                        self.nightWatchViewModel.monthlyTasks = refreshedNightWatchViewModel.monthlyTasks
+                        resetAlertShowing.toggle()
                     }, label: {
                         Text("Reset")
                     })
                 }
             }
         }
-        
-        
-//        HStack {
-//            VStack(alignment: .leading) {
-//                HStack {
-//                    //Image(systemName: "moon.stars")
-//                    Text("\(Image(systemName: "moon.stars"))Nightly Tasks")
-//                        .headerStyle()
-//                        //.modifier(HeaderStyle())
-//                }
-//                
-//                Text("Check all windows")
-//                Text("Check all doors")
-//                Text("Check that the safe is locked")
-//                Text("Inspect security cameras")
-//                Text("Clear ice from sidewalks")
-//                Text("Document \"strange and unusual\" occurrences")
-//                
-//                Text("\(Image(systemName: "sunset"))Weekly Tasks")
-//                    .headerStyle()
-//                    .padding(.top)
-//                Text("Check inside all vacant rooms")
-//                Text("Walk the perimeter of property")
-//                
-//                Text("\(Image(systemName: "calendar"))Monthly Tasks")
-//                    .headerStyle()
-//                    .padding(.top)
-//                Text("Test security alarm")
-//                Text("Test motion detectors")
-//                Text("Test smoke alarms")
-//                
-//                Spacer()
-//            }
-//            .foregroundStyle(.gray)
-//            
-//            Spacer()
-//        }
-//        .padding([.top, .leading], 10.0)
+        .alert("Reset List", isPresented: $resetAlertShowing) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text("Cancel")
+            }
+            Button(role: .destructive) {
+                let refreshedNightWatchViewModel = NightWatchViewModel()
+                self.nightWatchViewModel.nightlyTasks = refreshedNightWatchViewModel.nightlyTasks
+                self.nightWatchViewModel.weeklyTasks = refreshedNightWatchViewModel.weeklyTasks
+                self.nightWatchViewModel.monthlyTasks = refreshedNightWatchViewModel.monthlyTasks
+            } label: {
+                Text("Yes, Reset It")
+            }
+                   
+        } message: {
+            Text("Are you sure?")
+        }
     }
 }
 
