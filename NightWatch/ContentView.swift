@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Bindable var nightWatchViewModel = NightWatchViewModel()
+    @State private var focusModeOn = false
     
     var body: some View {
 //        List(nightlyTasks, id: \.self) { taskName in
@@ -19,10 +20,14 @@ struct ContentView: View {
                 Section(content: {
                     ForEach($nightWatchViewModel.nightlyTasks) {
                         task in
-                        NavigationLink() {
-                            DetailView(task: task)
-                        } label: {
-                            TaskRow(task: task.wrappedValue)
+                        if !focusModeOn || (focusModeOn && !task.wrappedValue.isComplete) {
+                            NavigationLink() {
+                                DetailView(task: task)
+                            } label: {
+                                TaskRow(task: task.wrappedValue)
+                            }
+                        } else {
+                            /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
                     }
                 }, header: {
@@ -55,6 +60,15 @@ struct ContentView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationTitle(Text("Home"))
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    Toggle(isOn: $focusModeOn, label: {
+                        Text("Focus Mode")
+                    })
+                    .toggleStyle(.switch)
+                    .frame(width: 175)
+                }
+            }
         }
         
         
