@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    var nightWatchViewModel = NightWatchViewModel()
+    @Bindable var nightWatchViewModel = NightWatchViewModel()
     
     var body: some View {
 //        List(nightlyTasks, id: \.self) { taskName in
@@ -17,12 +17,12 @@ struct ContentView: View {
         NavigationStack {
             List {
                 Section(content: {
-                    ForEach(nightWatchViewModel.nightlyTasks) {
+                    ForEach($nightWatchViewModel.nightlyTasks) {
                         task in
                         NavigationLink() {
                             DetailView(task: task)
                         } label: {
-                            TaskRow(task: task)
+                            TaskRow(task: task.wrappedValue)
                         }
                     }
                 }, header: {
@@ -30,11 +30,11 @@ struct ContentView: View {
                 })
                 
                 Section(content: {
-                    ForEach(nightWatchViewModel.weeklyTasks) { task in
+                    ForEach($nightWatchViewModel.weeklyTasks) { task in
                         NavigationLink() {
                             DetailView(task: task)
                         } label: {
-                            TaskRow(task: task)
+                            TaskRow(task: task.wrappedValue)
                         }
                     }
                 }, header: {
@@ -42,11 +42,11 @@ struct ContentView: View {
                 })
                 
                 Section(content: {
-                    ForEach(nightWatchViewModel.monthlyTasks) { task in
+                    ForEach($nightWatchViewModel.monthlyTasks) { task in
                         NavigationLink() {
                             DetailView(task: task)
                         } label: {
-                            TaskRow(task: task)
+                            TaskRow(task: task.wrappedValue)
                         }
                     }
                 }, header: {
