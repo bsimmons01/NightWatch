@@ -30,6 +30,12 @@ struct ContentView: View {
                             /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
                     }
+                    .onDelete { indexSet in
+                        nightWatchViewModel.nightlyTasks.remove(atOffsets: indexSet)
+                    }
+                    .onMove { indices, newOffset in
+                        nightWatchViewModel.nightlyTasks.move(fromOffsets: indices, toOffset: newOffset)
+                    }
                 }, header: {
                     TaskSectionHeader(symbolSystemName: "moon.stars", headerText: "Nightly Tasks")
                 })
@@ -45,6 +51,12 @@ struct ContentView: View {
                         } else {
                             /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
+                    }
+                    .onDelete { indexSet in
+                        nightWatchViewModel.weeklyTasks.remove(atOffsets: indexSet)
+                    }
+                    .onMove { indices, newOffset in
+                        nightWatchViewModel.weeklyTasks.move(fromOffsets: indices, toOffset: newOffset)
                     }
                 }, header: {
                     TaskSectionHeader(symbolSystemName: "sunset", headerText: "Weekly Tasks")
@@ -62,6 +74,12 @@ struct ContentView: View {
                             /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
                     }
+                    .onDelete { indexSet in
+                        nightWatchViewModel.monthlyTasks.remove(atOffsets: indexSet)
+                    }
+                    .onMove { indices, newOffset in
+                        nightWatchViewModel.monthlyTasks.move(fromOffsets: indices, toOffset: newOffset)
+                    }
                 }, header: {
                     TaskSectionHeader(symbolSystemName: "calendar", headerText: "Monthly Tasks")
                 })
@@ -75,6 +93,19 @@ struct ContentView: View {
                     })
                     .toggleStyle(.switch)
                     .frame(width: 175)
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        let refreshedNightWatchViewModel = NightWatchViewModel()
+                        self.nightWatchViewModel.nightlyTasks = refreshedNightWatchViewModel.nightlyTasks
+                        self.nightWatchViewModel.weeklyTasks = refreshedNightWatchViewModel.weeklyTasks
+                        self.nightWatchViewModel.monthlyTasks = refreshedNightWatchViewModel.monthlyTasks
+                    }, label: {
+                        Text("Reset")
+                    })
                 }
             }
         }
