@@ -36,10 +36,14 @@ struct ContentView: View {
                 
                 Section(content: {
                     ForEach($nightWatchViewModel.weeklyTasks) { task in
-                        NavigationLink() {
-                            DetailView(task: task)
-                        } label: {
-                            TaskRow(task: task.wrappedValue)
+                        if !focusModeOn || (focusModeOn && !task.wrappedValue.isComplete) {
+                            NavigationLink() {
+                                DetailView(task: task)
+                            } label: {
+                                TaskRow(task: task.wrappedValue)
+                            }
+                        } else {
+                            /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
                     }
                 }, header: {
@@ -48,10 +52,14 @@ struct ContentView: View {
                 
                 Section(content: {
                     ForEach($nightWatchViewModel.monthlyTasks) { task in
-                        NavigationLink() {
-                            DetailView(task: task)
-                        } label: {
-                            TaskRow(task: task.wrappedValue)
+                        if !focusModeOn || (focusModeOn && !task.wrappedValue.isComplete) {
+                            NavigationLink() {
+                                DetailView(task: task)
+                            } label: {
+                                TaskRow(task: task.wrappedValue)
+                            }
+                        } else {
+                            /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                         }
                     }
                 }, header: {
